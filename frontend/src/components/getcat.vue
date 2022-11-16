@@ -6,7 +6,8 @@ const data = reactive({
   cat: '',
   loading: false,
   chosenTag: '',
-  console: console
+  console: console,
+  error: ''
 })
 
 const tags = ref<string[]>()
@@ -20,6 +21,15 @@ async function getCat() {
   }
   data.cat = v
   console.log("Cats gotten", data.cat)
+}
+
+function setError(err: string) {
+  data.loading = false
+  data.cat = ''
+  data.error = err
+  setTimeout(() => {
+    data.error = ''
+  }, 2000)
 }
 
 onBeforeMount(async () => {
@@ -41,7 +51,12 @@ onBeforeMount(async () => {
   </div>
   <div>
     <div v-show="data.loading">Loading...</div>
-    <img :src="data.cat" @loadeddata="data.loading = false" @load="data.loading = false" @error="data.console.log('Error!')" v-show="!data.loading"/>
+    <img :src="data.cat"
+        @loadeddata="data.loading = false"
+        @load="data.loading = false"
+        @error="setError('Image couldn\'t load. Probably a bad url :(')"
+        v-show="!data.loading && data.error == ''"/>
+    <h2 class="error" v-show="data.error != ''">{{ data.error }}</h2>
   </div>
 </template>
 
@@ -49,5 +64,9 @@ onBeforeMount(async () => {
 img {
   max-width: 600px;
   max-height: 600px;
+}
+
+.error {
+  color: red
 }
 </style>

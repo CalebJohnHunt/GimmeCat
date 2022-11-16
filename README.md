@@ -1,19 +1,14 @@
-# README
+# GimmeCat
 
-## About
+This is a simple [Wails](https://wails.io/) app which provides cat images via [Cat As A Service](https://cataas.com).
 
-This is the official Wails Vue-TS template.
+## How to build
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
-
-## Live Development
-
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
-
-## Building
-
-To build a redistributable, production mode package, use `wails build`.
+Follow the [Wails build instructions](https://wails.io/docs/gettingstarted/building).  
+In short:
+1. Download [Go](https://go.dev)
+2. Download [NPM](https://www.npmjs.com/)
+3. Download [Wails](https://wails.io)
+4. Clone/download this repository
+5. Open a terminal in the root directory of this repository
+6. Run `wails build` and find the program in `./build/bin/GimmeCat`
