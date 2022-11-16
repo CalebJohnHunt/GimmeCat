@@ -1,16 +1,22 @@
 <script lang="ts" setup>
 import {reactive} from 'vue'
-import {Greet} from '../../wailsjs/go/main/App'
+import {Farewell, Greet} from '../../wailsjs/go/main/App'
 
 const data = reactive({
   name: "",
   resultText: "Please enter your name below 👇",
+  welcome: true
 })
 
 function greet() {
   Greet(data.name).then(result => {
     data.resultText = result
   })
+}
+
+async function farewell() {
+  let txt = await Farewell(data.name)
+  data.resultText = txt
 }
 
 </script>
@@ -20,7 +26,11 @@ function greet() {
     <div id="result" class="result">{{ data.resultText }}</div>
     <div id="input" class="input-box">
       <input id="name" v-model="data.name" autocomplete="off" class="input" type="text"/>
-      <button class="btn" @click="greet">Greet</button>
+      <button class="btn" @click="greet" v-if="data.welcome">Greet</button>
+      <button class="btn" @click="farewell" :disabled="data.name == '' || data.name == undefined" v-else>Goodbye</button>
+    </div>
+    <div>
+      <button @click="data.welcome = !data.welcome">Swap</button>
     </div>
   </main>
 </template>
@@ -33,7 +43,7 @@ function greet() {
 }
 
 .input-box .btn {
-  width: 60px;
+  width: 90px;
   height: 30px;
   line-height: 30px;
   border-radius: 3px;
